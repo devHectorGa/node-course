@@ -3,11 +3,11 @@ import Task from './task.js';
 
 const printTasks = (tasks) => {
   console.log();
-  tasks.forEach(({ desc, completeAt }, i) => {
+  tasks.forEach(({ desc, completeAt, createdAt }, i) => {
     const idx = `${i + 1}`.green;
     const state = completeAt
-      ? `Completada el ${getFormatDate(completeAt)}`.green
-      : 'Pendiente'.red;
+      ? `Completada `.green + `el ${getFormatDate(completeAt)}`
+      : `Pendiente `.red + `creada el ${getFormatDate(createdAt)}`;
     console.log(`${idx} ${desc} :: ${state}`);
   });
 };
@@ -44,5 +44,8 @@ export default class Tasks {
     printTasks(
       this.getList.filter(({ completeAt }) => Boolean(completeAt) === complete)
     );
+  }
+  deleteTask(id = '') {
+    if (this._list[id]) delete this._list[id];
   }
 }

@@ -75,3 +75,23 @@ export const readInput = async (message) => {
   const { desc } = await inquirer.prompt(question);
   return desc;
 };
+
+export const deleteTask = async (tasks = []) => {
+  const choices = tasks.map(({ id, desc }, i) => ({
+    value: id,
+    name: `${`${i + 1}.`.green} ${desc}`,
+  }));
+
+  const opt = [
+    {
+      type: 'list',
+      name: 'id',
+      message: 'Borrar',
+      choices,
+    },
+  ];
+
+  const { id } = await inquirer.prompt(opt);
+
+  return id;
+};
