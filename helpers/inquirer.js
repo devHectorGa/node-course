@@ -82,6 +82,11 @@ export const deleteTask = async (tasks = []) => {
     name: `${`${i + 1}.`.green} ${desc}`,
   }));
 
+  choices.unshift({
+    value: '0',
+    name: `${'0.'.green} Cancelar`,
+  });
+
   const opt = [
     {
       type: 'list',
@@ -94,4 +99,16 @@ export const deleteTask = async (tasks = []) => {
   const { id } = await inquirer.prompt(opt);
 
   return id;
+};
+
+export const confirm = async (message) => {
+  const question = [
+    {
+      type: 'confirm',
+      name: 'ok',
+      message,
+    },
+  ];
+  const { ok } = await inquirer.prompt(question);
+  return ok;
 };

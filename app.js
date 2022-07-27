@@ -1,5 +1,6 @@
 import 'colors';
 import {
+  confirm,
   deleteTask,
   inquirerMenu,
   pause,
@@ -33,6 +34,13 @@ const main = async () => {
         break;
       case '6':
         const id = await deleteTask(tasks.getList);
+        if (id === '0') break;
+        const validate = await confirm('¿Está seguro?');
+        if (validate) {
+          const deleteTask = tasks._list[id];
+          tasks.deleteTask(id);
+          console.log(`Tarea: "${deleteTask.desc}" borrada`);
+        }
         break;
     }
 
