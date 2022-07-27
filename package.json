@@ -1,10 +1,10 @@
 {
-  "name": "node-course",
-  "version": "0.0.1",
-  "description": "Tabla de multiplicar con archivo de texto",
+  "name": "to-do",
+  "version": "0.0.2",
+  "description": "Lista de tareas por consola",
   "main": "index.js",
   "repository": "https://github.com/devHectorGa/node-course",
-  "author": "Hector Garzon <hferney@technisys.com>",
+  "author": "Hector Garzón <contacto@devHector.Ga>",
   "license": "MIT",
   "dependencies": {
     "colors": "^1.4.0",
