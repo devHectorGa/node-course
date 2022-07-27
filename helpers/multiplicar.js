@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const crearArchivo = (base) =>
+const crearArchivo = (base, listar = false) =>
   new Promise((resolve, reject) => {
     try {
       let salida = '===================\n';
@@ -11,6 +11,8 @@ const crearArchivo = (base) =>
         salida += `${base} * ${i} = ${base * i}\n`;
       }
       const nameFile = `tabla-${base}.txt`;
+
+      listar && console.log(salida);
 
       fs.writeFileSync(nameFile, salida);
 
