@@ -14,6 +14,9 @@ const main = async () => {
         const desc = await readInput('Descripción:');
         tasks.createTask(desc);
         break;
+      case '2':
+        console.log(tasks.getList);
+        break;
     }
 
     await pause();
