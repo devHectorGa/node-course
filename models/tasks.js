@@ -24,4 +24,13 @@ export default class Tasks {
   setTasksFromArray(tasksArr) {
     this.setTasks = tasksArr;
   }
+
+  listComplete() {
+    console.log();
+    this.getList.forEach(({ desc, completeAt }, i) => {
+      const idx = `${i + 1}`.green;
+      const state = completeAt ? 'Completada'.green : 'Pendiente'.red;
+      console.log(`${idx} ${desc} :: ${state}`);
+    });
+  }
 }

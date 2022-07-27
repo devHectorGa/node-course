@@ -18,7 +18,7 @@ const main = async () => {
         tasks.createTask(desc);
         break;
       case '2':
-        console.log(tasks.getList);
+        tasks.listComplete();
         break;
     }
 
