@@ -1,19 +1,23 @@
 require('colors');
 const fs = require('fs');
 
-const crearArchivo = (base, listar = false) =>
+const crearArchivo = (base = 5, hasta = 10, listar = false) =>
   new Promise((resolve, reject) => {
     try {
-      let salida = '===================\n'.green;
-      salida += `   Tabla del ${base}    \n`.blue;
-      salida += '===================\n\n'.green;
+      let salida = '===================\n';
+      let consola = salida.green;
+      salida += `   Tabla del ${base}    \n`;
+      consola += `   Tabla del ${base}    \n`.blue;
+      salida += '===================\n\n';
+      consola += '===================\n\n'.green;
 
-      for (let i = 1; i <= 10; i++) {
-        salida += `${base} ${'x'.green} ${i} ${'='.green} ${base * i}\n`;
+      for (let i = 1; i <= hasta; i++) {
+        salida += `${base} x ${i} = ${base * i}\n`;
+        consola += `${base} ${'x'.green} ${i} ${'='.green} ${base * i}\n`;
       }
       const nameFile = `tabla-${base}.txt`;
 
-      listar && console.log(salida);
+      listar && console.log(consola);
 
       fs.writeFileSync(nameFile, salida);
 
