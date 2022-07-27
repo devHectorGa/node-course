@@ -1,14 +1,15 @@
+require('colors');
 const fs = require('fs');
 
 const crearArchivo = (base, listar = false) =>
   new Promise((resolve, reject) => {
     try {
-      let salida = '===================\n';
-      salida += `   Tabla del ${base}    \n`;
-      salida += '===================\n\n';
+      let salida = '===================\n'.green;
+      salida += `   Tabla del ${base}    \n`.blue;
+      salida += '===================\n\n'.green;
 
       for (let i = 1; i <= 10; i++) {
-        salida += `${base} * ${i} = ${base * i}\n`;
+        salida += `${base} ${'x'.green} ${i} ${'='.green} ${base * i}\n`;
       }
       const nameFile = `tabla-${base}.txt`;
 
