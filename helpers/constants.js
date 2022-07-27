@@ -1,3 +1,3 @@
 const separator = `======================================`;
 
-module.exports = { separator };
+export { separator };

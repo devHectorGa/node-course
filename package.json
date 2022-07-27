@@ -6,8 +6,10 @@
   "repository": "https://github.com/devHectorGa/node-course",
   "author": "Hector Garzón <contacto@devHector.Ga>",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "colors": "^1.4.0",
+    "inquirer": "^9.0.2",
     "yargs": "^17.5.1"
   },
   "devDependencies": {
