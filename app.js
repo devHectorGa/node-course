@@ -1,11 +1,13 @@
 import 'colors';
 import { inquirerMenu, pause, readInput } from './helpers/inquirer.js';
-import { saveDB } from './helpers/saveFile.js';
+import { readDB, saveDB } from './helpers/saveFile.js';
 import Tasks from './models/tasks.js';
 
 const main = async () => {
   let opt = '';
   const tasks = new Tasks();
+  const data = await readDB();
+  if (data) tasks.setTasksFromArray(data);
 
   do {
     opt = await inquirerMenu();
