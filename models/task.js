@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-class Tarea {
+export default class Task {
   constructor(desc) {
     this.id = v4();
     this.desc = desc;
@@ -8,5 +8,3 @@ class Tarea {
     this.completeAt = null;
   }
 }
-
-export default Tarea;
