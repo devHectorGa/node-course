@@ -1,5 +1,6 @@
 import 'colors';
 import { inquirerMenu, pause, readInput } from './helpers/inquirer.js';
+import { saveDB } from './helpers/saveFile.js';
 import Tasks from './models/tasks.js';
 
 const main = async () => {
@@ -18,6 +19,8 @@ const main = async () => {
         console.log(tasks.getList);
         break;
     }
+
+    saveDB(tasks.getList);
 
     await pause();
   } while (opt !== '0');
