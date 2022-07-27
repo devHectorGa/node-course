@@ -1,5 +1,16 @@
+import { getFormatDate } from '../helpers/formatDate.js';
 import Task from './task.js';
 
+const printTasks = (tasks) => {
+  console.log();
+  tasks.forEach(({ desc, completeAt }, i) => {
+    const idx = `${i + 1}`.green;
+    const state = completeAt
+      ? `Completada el ${getFormatDate(completeAt)}`.green
+      : 'Pendiente'.red;
+    console.log(`${idx} ${desc} :: ${state}`);
+  });
+};
 export default class Tasks {
   constructor() {
     this._list = {};
@@ -26,11 +37,12 @@ export default class Tasks {
   }
 
   listComplete() {
-    console.log();
-    this.getList.forEach(({ desc, completeAt }, i) => {
-      const idx = `${i + 1}`.green;
-      const state = completeAt ? 'Completada'.green : 'Pendiente'.red;
-      console.log(`${idx} ${desc} :: ${state}`);
-    });
+    printTasks(this.getList);
+  }
+
+  listForState(complete = true) {
+    printTasks(
+      this.getList.filter(({ completeAt }) => Boolean(completeAt) === complete)
+    );
   }
 }

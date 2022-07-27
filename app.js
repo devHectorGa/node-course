@@ -20,6 +20,12 @@ const main = async () => {
       case '2':
         tasks.listComplete();
         break;
+      case '3':
+        tasks.listForState();
+        break;
+      case '4':
+        tasks.listForState(false);
+        break;
     }
 
     saveDB(tasks.getList);
