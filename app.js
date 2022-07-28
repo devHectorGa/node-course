@@ -5,6 +5,7 @@ import {
   inquirerMenu,
   pause,
   readInput,
+  showCheckboxList,
 } from './helpers/inquirer.js';
 import { readDB, saveDB } from './helpers/saveFile.js';
 import Tasks from './models/tasks.js';
@@ -31,6 +32,9 @@ const main = async () => {
         break;
       case '4':
         tasks.listForState(false);
+        break;
+      case '5':
+        const ids = await showCheckboxList(tasks.getList);
         break;
       case '6':
         const id = await deleteTask(tasks.getList);

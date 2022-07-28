@@ -100,6 +100,26 @@ export const deleteTask = async (tasks = []) => {
 
   return id;
 };
+export const showCheckboxList = async (tasks = []) => {
+  const choices = tasks.map(({ id, desc, completeAt }, i) => ({
+    value: id,
+    name: `${`${i + 1}.`.green} ${desc}`,
+    checked: Boolean(completeAt),
+  }));
+
+  const opt = [
+    {
+      type: 'checkbox',
+      name: 'ids',
+      message: 'Selecciones',
+      choices,
+    },
+  ];
+
+  const { ids } = await inquirer.prompt(opt);
+
+  return ids;
+};
 
 export const confirm = async (message) => {
   const question = [
