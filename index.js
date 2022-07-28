@@ -10,6 +10,7 @@ const main = async () => {
     switch (opt) {
       case 1:
         const place = await readInput('Ciudad:');
+        const cities = await searches.city(place);
         break;
       case 2:
         console.log('Historial');
