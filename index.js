@@ -1,5 +1,7 @@
+import { config } from 'dotenv';
 import { inquirerMenu, pause, readInput } from './helpers/inquirer.js';
 import Searches from './models/searches.js';
+config();
 
 const main = async () => {
   let opt = '';
