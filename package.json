@@ -7,6 +7,9 @@
   "author": "Hector Garzón <contacto@devHector.Ga>",
   "license": "MIT",
   "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "colors": "^1.4.0",
     "inquirer": "^9.0.2",
