@@ -4,7 +4,7 @@ export default class Task {
   constructor(desc) {
     this.id = v4();
     this.desc = desc;
-    this.createdAt = Date.now();
+    this.createdAt = new Date().toISOString();
     this.completeAt = null;
   }
 }

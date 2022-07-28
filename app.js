@@ -35,6 +35,7 @@ const main = async () => {
         break;
       case '5':
         const ids = await showCheckboxList(tasks.getList);
+        tasks.toggleStatusTasks(ids);
         break;
       case '6':
         const id = await deleteTask(tasks.getList);

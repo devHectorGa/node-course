@@ -48,4 +48,16 @@ export default class Tasks {
   deleteTask(id = '') {
     if (this._list[id]) delete this._list[id];
   }
+  toggleStatusTasks(ids = []) {
+    this.setTasks = this.getList.reduce(
+      (acc, task) => [
+        ...acc,
+        {
+          ...task,
+          completeAt: ids.includes(task.id) ? new Date().toISOString() : null,
+        },
+      ],
+      []
+    );
+  }
 }
