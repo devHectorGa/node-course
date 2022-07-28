@@ -60,10 +60,10 @@ export const readInput = async (message) => {
   return desc;
 };
 
-export const deleteTask = async (tasks = []) => {
-  const choices = tasks.map(({ id, desc }, i) => ({
+export const listPlaces = async (places = []) => {
+  const choices = places.map(({ id, place_name }, i) => ({
     value: id,
-    name: `${`${i + 1}.`.green} ${desc}`,
+    name: `${`${i + 1}.`.green} ${place_name}`,
   }));
 
   choices.unshift({
@@ -75,7 +75,7 @@ export const deleteTask = async (tasks = []) => {
     {
       type: 'list',
       name: 'id',
-      message: 'Borrar',
+      message: 'Seleccione lugar:',
       choices,
     },
   ];

@@ -21,8 +21,14 @@ export default class Searches {
       });
 
       const resp = await instance.get();
-      console.log(resp.data);
-      return [];
-    } catch (error) {}
+      return resp.data.features.map((place) => ({
+        id: place.id,
+        place_name: place.place_name,
+        lng: place.center[0],
+        lat: place.center[1],
+      }));
+    } catch (error) {
+      throw error;
+    }
   }
 }
