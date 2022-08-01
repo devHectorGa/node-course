@@ -67,7 +67,7 @@ export const listPlaces = async (places = []) => {
   }));
 
   choices.unshift({
-    value: '0',
+    value: 0,
     name: `${'0.'.green} Cancelar`,
   });
 

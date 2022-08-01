@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { readDB, saveDB } from '../helpers/saveFile.js';
 
 export default class Searches {
   constructor() {
-    this._history = [];
+    this._history = this.readDB() || [];
   }
 
   get getParamsMapBox() {
@@ -59,5 +60,30 @@ export default class Searches {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  addPlaceToHistory(place = '') {
+    const indexToRemove = this?._history?.findIndex(
+      (hPlace) => hPlace === place
+    );
+    if (indexToRemove >= 0) this._history.splice(indexToRemove, 1);
+
+    this._history = [place, ...this._history].splice(0, 5);
+    this.saveDB();
+  }
+
+  showHistory() {
+    this._history.forEach((place_name, i) =>
+      console.log(`${`${i + 1}`.green} ${place_name}`)
+    );
+  }
+  saveDB() {
+    const payload = { history: this._history };
+    saveDB(payload);
+  }
+
+  readDB() {
+    const { history } = readDB();
+    return history;
   }
 }

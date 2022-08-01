@@ -19,7 +19,9 @@ const main = async () => {
         const search = await readInput('Ciudad:');
         const places = await searches.city(search);
         const id = await listPlaces(places);
+        if (!id) continue;
         const selectPlace = places.find((place) => place.id === id);
+        searches.addPlaceToHistory(selectPlace.place_name);
         const weather = await searches.placeWeather(
           selectPlace.lat,
           selectPlace.lng
@@ -35,10 +37,9 @@ const main = async () => {
         console.log('Cómo está el clima:', weather.description.green);
         break;
       case 2:
-        console.log('Historial');
+        searches.showHistory();
         break;
     }
-
     opt !== 0 && (await pause());
   } while (opt !== 0);
 };
