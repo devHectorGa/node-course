@@ -12,7 +12,10 @@ app.set('view engine', 'hbs');
 app.use(express.static('public'));
 
 app.get('/', (_, res) => {
-  res.render('home');
+  res.render('home', {
+    title: 'Node Course',
+    name: 'devHectorGa',
+  });
 });
 
 app.get('/generic', (_, res) => {
