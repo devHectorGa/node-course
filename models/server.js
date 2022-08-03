@@ -1,5 +1,7 @@
 import { config } from 'dotenv';
 import express from 'express';
+import cors from 'cors';
+
 config();
 
 const PORT = process.env.PORT || 3000;
@@ -12,6 +14,7 @@ export default class Server {
   }
 
   middleware() {
+    this.app.use(cors());
     this.app.use(express.static('public'));
   }
 
@@ -27,7 +30,7 @@ export default class Server {
       });
     });
     this.app.post('/api', (req, res) => {
-      res.json({
+      res.status(201).json({
         message: 'post API',
       });
     });
