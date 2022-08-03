@@ -4,9 +4,10 @@ export const usersGet = (req, res) => {
   });
 };
 
-export const usersPost = (req, res) => {
+export const usersPost = ({ body }, res) => {
   res.status(201).json({
     message: 'post API',
+    ...body,
   });
 };
 
