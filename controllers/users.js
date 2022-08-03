@@ -1,6 +1,7 @@
-export const usersGet = (req, res) => {
+export const usersGet = ({ query }, res) => {
   res.json({
     message: 'get API',
+    ...query,
   });
 };
 
@@ -11,9 +12,10 @@ export const usersPost = ({ body }, res) => {
   });
 };
 
-export const usersPut = (req, res) => {
+export const usersPut = ({ params: { id } }, res) => {
   res.json({
     message: 'put API',
+    id,
   });
 };
 
