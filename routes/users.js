@@ -7,6 +7,10 @@ import {
   usersPost,
   usersPut,
 } from '../controllers/users.js';
+import {
+  validateExistUserWithEmail,
+  validateUserData,
+} from '../middlewares/validate-data.js';
 
 const router = Router();
 
@@ -16,7 +20,22 @@ router.put('/:id', usersPut);
 
 router.post(
   '/',
-  [check('email', 'El correo no es válido').isEmail()],
+  [
+    check('name', 'El nombre es obligatorio').not().isEmpty(),
+    check('password', 'El password debe ser más de 6 caracteres.').isLength({
+      min: 6,
+    }),
+    check('password', 'El password debe ser más de 6 caracteres.').isLength({
+      min: 6,
+    }),
+    check('role', 'El password debe ser más de 6 caracteres.').isIn([
+      'ADMIN',
+      'USER',
+    ]),
+    check('email', 'El correo no es válido').isEmail(),
+    validateUserData,
+    validateExistUserWithEmail,
+  ],
   usersPost
 );
 
