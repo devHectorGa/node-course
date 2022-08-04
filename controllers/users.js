@@ -1,4 +1,5 @@
 import { UserModel } from '../models/user.js';
+import bcryptjs from 'bcryptjs';
 
 export const usersGet = ({ query }, res) => {
   res.json({
@@ -7,8 +8,11 @@ export const usersGet = ({ query }, res) => {
   });
 };
 
-export const usersPost = async ({ body }, res) => {
-  const user = new UserModel(body);
+export const usersPost = async ({ body: { name, email, password } }, res) => {
+  const salt = bcryptjs.genSaltSync();
+  const cryptPass = bcryptjs.hashSync(password, salt);
+  const user = new UserModel({ name, email, password: cryptPass });
+
   await user.save();
   res.status(201).json({
     message: 'post API',
