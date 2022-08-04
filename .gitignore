@@ -3,4 +3,4 @@
 /db
 *.log
 *.txt
-*.env
+.env

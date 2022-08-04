@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 
 import usersRoutes from '../routes/users.js';
+import { dbConnection } from '../database/config.js';
 
 config();
 
@@ -11,8 +12,13 @@ const PORT = process.env.PORT || 3000;
 export default class Server {
   constructor() {
     this.app = express();
+    this.connectDB();
     this.middleware();
     this.routes();
+  }
+
+  async connectDB() {
+    await dbConnection();
   }
 
   middleware() {
