@@ -1,4 +1,5 @@
-import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
+const { Schema, model } = mongoose;
 
 const UserSchema = Schema({
   name: { type: String, required: [true, 'El nombre es requerido'] },
