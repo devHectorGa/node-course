@@ -1,6 +1,5 @@
 import { UserModel } from '../models/user.js';
 import bcryptjs from 'bcryptjs';
-import { validationResult } from 'express-validator';
 
 export const usersGet = ({ query }, res) => {
   res.json({
@@ -20,14 +19,21 @@ export const usersPost = async (req, res) => {
   await user.save();
   res.status(201).json({
     message: 'post API',
-    ...user,
+    user,
   });
 };
 
-export const usersPut = ({ params: { id } }, res) => {
+export const usersPut = async ({ params: { id }, body }, res) => {
+  const { password, google, email, ...rest } = body;
+  if (password) {
+    const salt = bcryptjs.genSaltSync();
+    rest.password = bcryptjs.hashSync(password, salt);
+  }
+  const user = await UserModel.findByIdAndUpdate(id, rest);
+
   res.json({
     message: 'put API',
-    id,
+    user,
   });
 };
 

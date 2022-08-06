@@ -7,8 +7,12 @@ export const validateUserData = (req, res, next) => {
   next();
 };
 
-export const validateExistUserWithEmail = ({ body: { email } }, res, next) => {
-  const existUser = UserModel.findOne({ email });
+export const validateExistUserWithEmail = async (
+  { body: { email } },
+  res,
+  next
+) => {
+  const existUser = await UserModel.findOne({ email });
   if (existUser) {
     return res.status(400).json({ message: 'El correo ya está registrado' });
   }
