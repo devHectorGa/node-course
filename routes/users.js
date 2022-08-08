@@ -36,7 +36,7 @@ router.post(
       min: 6,
     }),
     check('email', 'El correo no es válido').isEmail(),
-    check('rol', 'El correo no es válido').optional().custom(isValidRole),
+    check('rol', 'El rol no es válido').optional().custom(isValidRole),
     validateExistUserWithEmail,
     validateUserData,
   ],
