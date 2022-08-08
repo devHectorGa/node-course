@@ -1,15 +1,22 @@
 import { UserModel } from '../models/user.js';
 import bcryptjs from 'bcryptjs';
 
+const activeUsers = { state: true };
+
 export const usersGet = async ({ query: { limit, page } }, res) => {
   const startFrom = (page - 1) * limit;
-  const users = await UserModel.find()
-    .skip(+startFrom || 0)
-    .limit(+limit || 5);
+
+  const [users, count] = await Promise.all([
+    UserModel.find(activeUsers)
+      .skip(+startFrom || 0)
+      .limit(+limit || 5),
+    UserModel.countDocuments(activeUsers),
+  ]);
 
   res.json({
     message: 'get API',
     users,
+    count,
   });
 };
 
