@@ -1,10 +1,15 @@
 import { UserModel } from '../models/user.js';
 import bcryptjs from 'bcryptjs';
 
-export const usersGet = ({ query }, res) => {
+export const usersGet = async ({ query: { limit, page } }, res) => {
+  const startFrom = (page - 1) * limit;
+  const users = await UserModel.find()
+    .skip(+startFrom || 0)
+    .limit(+limit || 5);
+
   res.json({
     message: 'get API',
-    ...query,
+    users,
   });
 };
 
