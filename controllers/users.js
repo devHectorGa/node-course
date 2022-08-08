@@ -24,7 +24,7 @@ export const usersPost = async (req, res) => {
 };
 
 export const usersPut = async ({ params: { id }, body }, res) => {
-  const { password, google, email, ...rest } = body;
+  const { _id, password, google, email, ...rest } = body;
   if (password) {
     const salt = bcryptjs.genSaltSync();
     rest.password = bcryptjs.hashSync(password, salt);

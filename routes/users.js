@@ -7,7 +7,7 @@ import {
   usersPost,
   usersPut,
 } from '../controllers/users.js';
-import { isValidRole } from '../helpers/db-validators.js';
+import { isValidId, isValidRole } from '../helpers/db-validators.js';
 import {
   validateExistUserWithEmail,
   validateUserData,
@@ -17,7 +17,16 @@ const router = Router();
 
 router.get('/', usersGet);
 
-router.put('/:id', usersPut);
+router.put(
+  '/:id',
+  [
+    check('id', 'No es un id Valido').isMongoId(),
+    check('id').custom(isValidId),
+    check('rol', 'El correo no es válido').optional().custom(isValidRole),
+    validateUserData,
+  ],
+  usersPut
+);
 
 router.post(
   '/',
