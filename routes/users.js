@@ -37,13 +37,21 @@ router.post(
     }),
     check('email', 'El correo no es válido').isEmail(),
     check('rol', 'El correo no es válido').optional().custom(isValidRole),
-    validateUserData,
     validateExistUserWithEmail,
+    validateUserData,
   ],
   usersPost
 );
 
-router.delete('/', usersDelete);
+router.delete(
+  '/:id',
+  [
+    check('id', 'No es un id Valido').isMongoId(),
+    check('id').custom(isValidId),
+    validateUserData,
+  ],
+  usersDelete
+);
 
 router.patch('/', usersPatch);
 

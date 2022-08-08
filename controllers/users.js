@@ -49,7 +49,8 @@ export const usersPut = async ({ params: { id }, body }, res) => {
   });
 };
 
-export const usersDelete = (req, res) => {
+export const usersDelete = async ({ params: { id } }, res) => {
+  await UserModel.findByIdAndUpdate(id, { state: false });
   res.json({
     message: 'delete API',
   });
