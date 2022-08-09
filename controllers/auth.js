@@ -1,6 +1,7 @@
 import { UserModel } from '../models/index.js';
 import bcryptjs from 'bcryptjs';
 import { generateJWT } from '../helpers/jwt.js';
+import { verifyGoogleToken } from '../helpers/google-verify.js';
 
 const INVALID_CREDENTIAL_MESSAGE = 'Usuario / Correo no son correctos';
 
@@ -22,5 +23,14 @@ export const login = async ({ body: { email, password = '' } }, res) => {
 };
 
 export const googleSignIn = async ({ body: { id_token } }, res) => {
-  res.json({ message: 'Google Sign In', id_token });
+  try {
+    const googleUser = await verifyGoogleToken(id_token);
+    console.log(googleUser);
+    res.json({ message: 'Google Sign In', googleUser });
+  } catch (error) {
+    console.error(error);
+    return res.status(400).json({
+      message: 'No se pudo verificar',
+    });
+  }
 };
