@@ -1,11 +1,12 @@
 import jwt from 'jsonwebtoken';
+import { UserModel } from '../models/user.js';
 
-export const validateJWT = (req, res, next) => {
+export const validateJWT = async (req, res, next) => {
   try {
     const token = req.header('x-token');
     if (!token) throw new Error('No receive token');
     const { uid } = jwt.verify(token, process.env.SECRET_JWT_KEY);
-    req.uid = uid;
+    req.user = await UserModel.findById(uid);
   } catch (error) {
     console.log(error);
     return res.status(401).json({ message: `Necesita autenticación` });

@@ -49,12 +49,26 @@ export const usersPut = async ({ params: { id }, body }, res) => {
   });
 };
 
-export const usersDelete = async ({ params: { id }, uid }, res) => {
-  await UserModel.findByIdAndUpdate(id, { state: true });
-  res.json({
-    uid,
-    message: 'delete API',
-  });
+export const usersDelete = async ({ params: { id }, user }, res) => {
+  try {
+    if (id === user.uid || user.role === 'ADMIN') {
+      const deleteUser = await UserModel.findOneAndUpdate(
+        { _id: id, state: true },
+        { state: false },
+        { new: true }
+      );
+      if (!deleteUser) {
+        throw new Error(`Usuario no existe en la base de datos.`);
+      }
+      res.json({
+        message: 'delete user correctly',
+        user: deleteUser,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(401).json({ message: 'Token no valido' });
+  }
 };
 
 export const usersPatch = (req, res) => {
