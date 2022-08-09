@@ -2,15 +2,14 @@ import { config } from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 
-import authRoutes from '../routes/auth.js';
-import usersRoutes from '../routes/users.js';
-import { dbConnection } from '../database/config.js';
+import { authRoutes, usersRoutes } from '../routes/index.js';
+import { dbConnection } from '../database/index.js';
 
 config();
 
 const PORT = process.env.PORT || 3000;
 
-export default class Server {
+export class Server {
   constructor() {
     this.app = express();
     this.connectDB();

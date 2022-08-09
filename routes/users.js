@@ -6,19 +6,19 @@ import {
   usersPatch,
   usersPost,
   usersPut,
-} from '../controllers/users.js';
+} from '../controllers/index.js';
 import { isValidId, isValidRole } from '../helpers/db-validators.js';
 import {
   validateExistUserWithEmail,
   validateUserData,
-} from '../middlewares/validate-data.js';
-import { validateJWT } from '../middlewares/validate-jwt.js';
+  validateJWT,
+} from '../middlewares/index.js';
 
-const router = Router();
+export const usersRoutes = Router();
 
-router.get('/', usersGet);
+usersRoutes.get('/', usersGet);
 
-router.put(
+usersRoutes.put(
   '/:id',
   [
     check('id', 'No es un id Valido').isMongoId(),
@@ -29,7 +29,7 @@ router.put(
   usersPut
 );
 
-router.post(
+usersRoutes.post(
   '/',
   [
     check('name', 'El nombre es obligatorio').not().isEmpty(),
@@ -44,7 +44,7 @@ router.post(
   usersPost
 );
 
-router.delete(
+usersRoutes.delete(
   '/:id',
   [
     validateJWT,
@@ -55,6 +55,4 @@ router.delete(
   usersDelete
 );
 
-router.patch('/', usersPatch);
-
-export default router;
+usersRoutes.patch('/', usersPatch);

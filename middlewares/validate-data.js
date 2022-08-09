@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator';
-import { UserModel } from '../models/user.js';
+import { UserModel } from '../models/index.js';
 
 export const validateUserData = (req, res, next) => {
   const errors = validationResult(req);

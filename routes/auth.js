@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { login } from '../controllers/auth.js';
-import { validateUserData } from '../middlewares/validate-data.js';
+import { login } from '../controllers/index.js';
+import { validateUserData } from '../middlewares/index.js';
 
-const router = Router();
+export const authRoutes = Router();
 
-router.post(
+authRoutes.post(
   '/login',
   [
     check('email', 'El correo es obligatorio').isEmail(),
@@ -17,5 +17,3 @@ router.post(
   ],
   login
 );
-
-export default router;
