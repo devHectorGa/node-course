@@ -20,3 +20,7 @@ export const login = async ({ body: { email, password = '' } }, res) => {
     res.status(500).json({ message: `Error, algo salio mal` });
   }
 };
+
+export const googleSignIn = async ({ body: { id_token } }, res) => {
+  res.json({ message: 'Google Sign In', id_token });
+};
