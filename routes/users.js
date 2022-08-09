@@ -12,6 +12,7 @@ import {
   validateExistUserWithEmail,
   validateUserData,
 } from '../middlewares/validate-data.js';
+import { validateJWT } from '../middlewares/validate-jwt.js';
 
 const router = Router();
 
@@ -46,6 +47,7 @@ router.post(
 router.delete(
   '/:id',
   [
+    validateJWT,
     check('id', 'No es un id Valido').isMongoId(),
     check('id').custom(isValidId),
     validateUserData,

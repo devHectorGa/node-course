@@ -4,10 +4,12 @@ import { generateJWT } from '../helpers/jwt.js';
 
 const INVALID_CREDENTIAL_MESSAGE = 'Usuario / Correo no son correctos';
 
-export const login = async ({ body: { email, password } }, res) => {
+export const login = async ({ body: { email, password = '' } }, res) => {
   try {
     const user = await UserModel.findOne({ email, state: true });
-    const validPassword = bcryptjs.compareSync(password, user.password);
+    const validPassword = user
+      ? bcryptjs.compareSync(password, user.password)
+      : false;
     if (!user || !validPassword) {
       return res.status(400).json({ message: INVALID_CREDENTIAL_MESSAGE });
     }
