@@ -24,9 +24,21 @@ export const login = async ({ body: { email, password = '' } }, res) => {
 
 export const googleSignIn = async ({ body: { id_token } }, res) => {
   try {
-    const googleUser = await verifyGoogleToken(id_token);
-    console.log(googleUser);
-    res.json({ message: 'Google Sign In', googleUser });
+    const userData = await verifyGoogleToken(id_token);
+    let user = await UserModel.findOne({ email: userData.email });
+
+    console.log(user);
+    if (!user) {
+      user = new UserModel({ ...userData, google: true });
+      await user.save();
+    }
+    if (!user.state) {
+      return res.status(401).json({
+        message: 'Usuario bloqueado hable con el administrador',
+      });
+    }
+    const token = await generateJWT(user.id);
+    res.json({ user, token });
   } catch (error) {
     console.error(error);
     return res.status(400).json({

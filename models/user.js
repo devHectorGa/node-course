@@ -8,7 +8,6 @@ const UserSchema = Schema({
     required: [true, 'El correo es requerido'],
     unique: true,
   },
-  password: { type: String, required: [true, 'La contraseña es requerida'] },
   image: { type: String },
   rol: {
     type: String,
@@ -18,6 +17,13 @@ const UserSchema = Schema({
   },
   state: { type: Boolean, default: true },
   google: { type: Boolean, default: false },
+  password: {
+    type: String,
+    required: function () {
+      console.log(this);
+      return !this.google;
+    },
+  },
 });
 
 UserSchema.methods.toJSON = function () {
