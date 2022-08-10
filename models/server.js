@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 
-import { authRoutes, usersRoutes } from '../routes/index.js';
+import { authRoutes, categoriesRoutes, usersRoutes } from '../routes/index.js';
 import { dbConnection } from '../database/index.js';
 
 config();
@@ -30,6 +30,7 @@ export class Server {
   routes() {
     this.app.use('/api/auth', authRoutes);
     this.app.use('/api/users', usersRoutes);
+    this.app.use('/api/categories', categoriesRoutes);
   }
 
   listen() {
