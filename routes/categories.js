@@ -1,17 +1,32 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { createCategory } from '../controllers/index.js';
-import { validateJWT, validateUserData } from '../middlewares/index.js';
+import {
+  createCategory,
+  deleteCategory,
+  getCategories,
+  getCategory,
+  updateCategory,
+} from '../controllers/index.js';
+import { existCategoryById } from '../helpers/db-validators.js';
+import {
+  isAdminRole,
+  validateJWT,
+  validateUserData,
+} from '../middlewares/index.js';
 
 export const categoriesRoutes = Router();
 
-categoriesRoutes.get('/', (_, res) => {
-  res.json({ message: 'get' });
-});
+categoriesRoutes.get('/', getCategories);
 
-categoriesRoutes.get('/:id', (_, res) => {
-  res.json({ message: 'get id' });
-});
+categoriesRoutes.get(
+  '/:id',
+  [
+    check('id', 'No es un id válido').isMongoId(),
+    check('id').custom(existCategoryById),
+    validateUserData,
+  ],
+  getCategory
+);
 
 categoriesRoutes.post(
   '/',
@@ -23,10 +38,26 @@ categoriesRoutes.post(
   createCategory
 );
 
-categoriesRoutes.put('/:id', (_, res) => {
-  res.json({ message: 'put' });
-});
+categoriesRoutes.put(
+  '/:id',
+  [
+    validateJWT,
+    check('name', 'Name es obligatorio').notEmpty(),
+    check('id', 'No es un id válido').isMongoId(),
+    check('id').custom(existCategoryById),
+    validateUserData,
+  ],
+  updateCategory
+);
 
-categoriesRoutes.delete('/:id', (_, res) => {
-  res.json({ message: 'delete' });
-});
+categoriesRoutes.delete(
+  '/:id',
+  [
+    validateJWT,
+    isAdminRole,
+    check('id', 'No es un id válido').isMongoId(),
+    check('id').custom(existCategoryById),
+    validateUserData,
+  ],
+  deleteCategory
+);
