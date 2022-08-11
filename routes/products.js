@@ -1,24 +1,82 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { googleSignIn, login } from '../controllers/index.js';
-import { validateUserData } from '../middlewares/index.js';
+import {
+  createProduct,
+  deleteProduct,
+  getProducts,
+  getProduct,
+  updateProduct,
+} from '../controllers/index.js';
+import {
+  existCategoryById,
+  existProductById,
+} from '../helpers/db-validators.js';
+import {
+  isAdminRole,
+  validateJWT,
+  validateUserData,
+} from '../middlewares/index.js';
 
 export const productsRoutes = Router();
 
-productsRoutes.post(
-  '/login',
+productsRoutes.get('/', getProducts);
+
+productsRoutes.get(
+  '/:id',
   [
-    check('email', 'El correo es obligatorio').isEmail(),
-    check('password', 'La contraseña es obligatoria').notEmpty(),
-    check('password', 'La contraseña debe tener mínimo 6 caracteres').isLength({
-      min: 6,
-    }),
+    check('id', 'No es un id válido').isMongoId(),
+    check('id').custom(existProductById),
     validateUserData,
   ],
-  login
+  getProduct
 );
+
 productsRoutes.post(
-  '/google',
-  [check('id_token', 'El token es obligatorio').notEmpty(), validateUserData],
-  googleSignIn
+  '/',
+  [
+    validateJWT,
+    check('name', 'Name es obligatorio').notEmpty(),
+    check('price', 'Price debe ser numérico').optional().isNumeric(),
+    check('category', 'Formato categoria no es válido.').isMongoId(),
+    check('category').custom(existCategoryById),
+    check('description', 'Description is an string and less 6 characters')
+      .isString()
+      .isLength({ min: 6 })
+      .optional(),
+    check('available', 'Available is a boolean format').isBoolean().optional(),
+    validateUserData,
+  ],
+  createProduct
+);
+
+productsRoutes.put(
+  '/:id',
+  [
+    validateJWT,
+    check('id', 'No es un id válido').isMongoId(),
+    check('id').custom(existProductById),
+    check('name', 'Name es obligatorio').notEmpty().optional(),
+    check('price', 'Price debe ser numérico').optional().isNumeric(),
+    check('category', 'Formato categoria no es válido.').optional().isMongoId(),
+    check('category').optional().custom(existCategoryById),
+    check('description', 'Description is an string and less 6 characters')
+      .isString()
+      .isLength({ min: 6 })
+      .optional(),
+    check('available', 'Available is a boolean format').isBoolean().optional(),
+    validateUserData,
+  ],
+  updateProduct
+);
+
+productsRoutes.delete(
+  '/:id',
+  [
+    validateJWT,
+    isAdminRole,
+    check('id', 'No es un id válido').isMongoId(),
+    check('id').custom(existProductById),
+    validateUserData,
+  ],
+  deleteProduct
 );
